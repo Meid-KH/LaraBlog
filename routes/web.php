@@ -3,6 +3,7 @@
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,12 +22,20 @@ Route::get('/', function () {
 });
 
 // POST
-Route::get('/posts', function () {
+Route::get('/posts', function (Request $request) {
     $posts = Post::latest()->get();
+    $search = request('search');
+    if ( $search ) {
+        $posts = Post::query()
+            ->where('title', 'LIKE', "%{$search}%")
+            ->orWhere('body', 'LIKE', "%{$search}%")
+            ->get();
+    }
     return view('posts', [
-        'posts' => $posts
+        'posts' => $posts,
+        'categories' => Category::all(),
     ]);
-});
+})->name('posts');
 Route::get('/post/{post:slug}', function (Post $post) {
     return view('post', [
         'post' => $post
@@ -36,12 +45,14 @@ Route::get('/post/{post:slug}', function (Post $post) {
 // Category
 Route::get('/categories', function () {
     return view('categories', [
-        'categories' => Category::latest()->get()
+        'categories' => Category::latest()->get(),
     ]);
-});
+})->name('categories');
 Route::get('/category/{category:slug}', function (Category $category) {
     return view('category', [
-        'category' => $category
+        'category' => $category,
+        'currentCategory' => $category,
+        'categories' => Category::all(),
     ]);
 });
 

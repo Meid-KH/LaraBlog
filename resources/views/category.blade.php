@@ -1,29 +1,20 @@
-@extends('layout')
-
-@section('content')
-    <header class="mb-5">
+<x-layout>
+    {{-- <header class="mb-5">
         <h1 class="text-uppercase mb-3"> {{ $category->name }} </h1>
         <p class="lead">
             {{ $category->description }} 
         </p>
-    </header>
-    {{-- <h3> {{$category->posts->title}} </h3> --}}
-    {{-- @dump($category->posts->name) --}}
-    <h2 class="mb-4">All posts</h2>
-    @foreach ($category->posts as $post)
-        <a href="/post/{{$post->slug}}" class="d-block border p-4 rounded bg-secondary text-light text-decoration-none mb-4">
-            {{-- <h3 class="mb-2"> {{ $post->title }} </h3> --}}
-            <div class="d-flex align-items-start justify-content-between mb-2">
-                <h2 class="h3"> {{ $post->title }} </h2>
-                <span class="alert alert-dark d-inline-block text-truncate font-weight-bold py-1 rounded">
-                    Authored by : {{ $post->author->name}}
-                </span>
-            </div>
-            <span class="alert alert-info d-inline-block font-weight-bold py-1 rounded">
-                Category : {{ $post->category->name }}
-            </span>
-            <p>{{ $post->excerpt }}</p>
-        </a>
-    @endforeach
-@endsection
-
+    </header> --}}
+    <x-post-header :categories="$categories" :currentCategory="$currentCategory"/>
+    <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
+        @if ($category->posts->count())
+            <x-post-item-featured :post="$category->posts[0]" />
+        @else
+            <p> No posts yet </p>
+        @endif
+        
+        @if ($category->posts->count() > 1)
+            <x-post-list :posts="$category->posts" />
+        @endif
+    </main>
+</x-layout>
