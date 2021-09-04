@@ -4,12 +4,12 @@
     Latest <span class="text-blue-500">Laravel From Scratch</span> News
   </h1>
 
-  <h2 class="inline-flex mt-2">
+  {{-- <h2 class="inline-flex mt-2">
     By Lary Laracore
     <img src="/images/lary-head.svg" alt="Head of Lary the mascot" />
-  </h2>
+  </h2> --}}
 
-  <p class="text-sm mt-14">
+  <p class="text-sm mt-4">
     Another year. Another update. We're refreshing the popular Laravel series
     with new content. I'm going to keep you guys up to speed with what's going
     on!
@@ -59,30 +59,6 @@
         </x-dropdown>
       </div>
     @endif
-
-    <!-- Other Filters -->
-    <div
-      class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl"
-    >
-      <select
-        class="
-          flex-1
-          appearance-none
-          bg-transparent
-          py-2
-          pl-3
-          pr-9
-          text-sm
-          font-semibold
-        "
-      >
-        <option value="category" disabled selected>Other Filters</option>
-        <option value="foo">Foo</option>
-        <option value="bar">Bar</option>
-      </select>
-
-      <x-icon name="caret" class="transform -rotate-90 absolute pointer-events-none" style="right: 12px"/>
-    </div>
 
     <!-- Search -->
     <div

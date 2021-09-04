@@ -5,7 +5,7 @@
         @if ($posts->count())
             <x-post-item-featured :post="$posts[0]" />
         @else
-            <p> No posts yet </p>
+            <div class="bg-yellow-100 border-2 border-yellow-300 font-semibold p-5 rounded-2xl text-center text-sm text-yellow-800">No posts matching your search yet, please check back later !</div>
         @endif
 
         

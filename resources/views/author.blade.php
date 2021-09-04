@@ -1,32 +1,25 @@
-@extends('layout')
-
-@section('content')
-    <header class="mb-5">
-        <h1 class="mb-3">
-            {{ $author->name }} 
-            Lorem ipsum dolor sit amet consectetur.
+<x-layout>
+    <header class="max-w-xl mx-auto mt-20 text-center">
+        <h1 class="text-4xl">
+            Latest <span class="text-blue-500"> blog posts</span> 
         </h1>
-        <p class="lead">
-            Email: {{ $author->email }} 
-        </p>
+        <h2 class="inline-flex mt-2">
+            By {{ $author->name }} 
+            <img src="/images/lary-head.svg" alt="Head of Lary the mascot">
+        </h2>
     </header>
-    {{-- <h3> {{$author->posts->title}} </h3> --}}
-    {{-- @dump($author->posts->name) --}}
-    <h2 class="mb-4">All posts</h2>
-    @foreach ($author->posts as $post)
-        <a href="/post/{{$post->slug}}" class="d-block border p-4 rounded bg-secondary text-light text-decoration-none mb-4">
-            {{-- <h3 class="mb-2"> {{ $post->title }} </h3> --}}
-            <div class="d-flex align-items-start justify-content-between mb-2">
-                <h2 class="h3"> {{ $post->title }} </h2>
-                <span class="alert alert-dark d-inline-block text-truncate font-weight-bold py-1 rounded">
-                    Authored by : {{ $post->author->name}}
-                </span>
-            </div>
-            <span class="alert alert-info d-inline-block font-weight-bold py-1 rounded">
-                Category : {{ $post->category->name }}
-            </span>
-            <p>{{ $post->excerpt }}</p>
-        </a>
-    @endforeach
-@endsection
 
+    <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
+        @if ($author->posts->count())
+            <x-post-item-featured :post="$author->posts[0]" />
+        @else
+            <div class="bg-yellow-100 border-2 border-yellow-300 font-semibold p-5 rounded-2xl text-center text-sm text-yellow-800">No posts matching your search yet, please check back later !</div>
+        @endif
+
+        
+        @if ($author->posts->count() > 1)
+            <x-post-list :posts="$author->posts" />
+        @endif
+    </main>
+
+</x-layout>    

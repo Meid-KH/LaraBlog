@@ -57,7 +57,7 @@
       </div>
 
       <footer class="flex justify-between items-center mt-8">
-        <a href="author/{{ $post->author->id }}}" class="flex flex-1 items-center text-sm">
+        <a href="/author/{{ $post->author->id }}}" class="flex flex-1 items-center text-sm">
           <img src="/images/lary-avatar.svg" alt="Lary avatar" />
           <div class="ml-3">
             <h5 class="font-bold">{{ $post->author->name }}</h5>
