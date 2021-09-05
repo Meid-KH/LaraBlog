@@ -26,8 +26,8 @@ use Illuminate\Support\Facades\Route;
 
 // POST
 Route::get('/', [PostController::class, 'index'])->name('posts');
-
 Route::get('/post/{post:slug}', [PostController::class, 'show'])->name('post');
+Route::post('/post/{post:slug}/comment', [PostController::class, 'storeComment'])->name('store_comment');
 
 
 // Category

@@ -11,20 +11,20 @@
   "
 >
   <div class="py-6 px-5 lg:flex">
-    <div class="flex-1 lg:mr-8">
+    <a href="{{ route('post', $post->slug) }}" class="flex-1 lg:mr-8">
       <img
         src="/images/illustration-1.png"
         alt="Blog Post illustration"
         class="rounded-xl"
       />
-    </div>
+    </a >
 
     <div class="flex-1 flex flex-col justify-between">
       <header class="mt-8 lg:mt-0">
         <div class="space-x-2">
           {{-- Todo: check if it has category --}}
           <a
-            href="/category/{{ $post->category->slug }}"
+            href="{{ route('category', $post->category->slug) }}"
             class="
               px-3
               py-1
@@ -39,7 +39,7 @@
 
         <div class="mt-4">
           <h1 class="text-3xl">
-            {{ $post->title }}
+            {{ ucwords($post->title) }}
           </h1>
 
           <span class="mt-2 block text-gray-400 text-xs">
@@ -53,7 +53,7 @@
       </div>
 
       <footer class="flex justify-between items-center mt-8">
-        <a href="/author/{{ $post->author->id }}}" class="flex items-center text-sm">
+        <a href="{{ route('author', $post->author->id) }}" class="flex items-center text-sm">
           <img src="/images/lary-avatar.svg" alt="Lary avatar" />
           <div class="ml-3">
             <h5 class="font-bold">{{ $post->author->name }}</h5>
@@ -63,7 +63,7 @@
 
         <div class="hidden lg:block">
           <a
-            href="/post/{{ $post->slug }}"
+            href="{{ route('post', $post->slug) }}"
             class="
               transition-colors
               duration-300

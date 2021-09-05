@@ -27,7 +27,7 @@ class PostFactory extends Factory
         return [
             'category_id' => Category::factory(),
             'user_id' => User::factory(),
-            'title' => $this->faker->sentence(),
+            'title' => $this->faker->words(2, true),
             'slug' => $this->faker->slug(),
             'excerpt' => $this->faker->paragraphs(2, true),
             'body' => $this->faker->paragraphs(10, true),

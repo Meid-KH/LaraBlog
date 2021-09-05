@@ -1,18 +1,4 @@
 <x-layout>
-    {{-- <header class="mb-5">
-        <h1 class="text-uppercase h2 mb-3"> {{ $post->title }} </h1>
-        <div class="d-flex align-items-start justify-content-between mb-2">
-            <a href="/category/{{ $post->category->slug }}" class="alert alert-info d-inline-block font-weight-bold py-1 rounded">
-                Category : {{ $post->category->name }}
-            </a>
-            <a href="/author/{{ $post->author->id }}" class="alert alert-dark d-inline-block text-truncate font-weight-bold py-1 rounded">
-                Authored by : {{ $post->author->name}}
-            </a>
-        </div>
-    </header>
-    <article class="border p-4 rounded bg-secondary text-light">
-        <p class="m-0 lead"> {{ $post->body }} </p>
-    </article> --}}
     <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
         <article class="max-w-4xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
             <div class="col-span-4 lg:text-center lg:pt-14 mb-10">
@@ -22,7 +8,7 @@
                     Published <time>{{ $post->created_at->diffForHumans() }}</time>
                 </p>
 
-                <a href="/author/{{ $post->author->id }}" class="flex items-center lg:justify-center text-sm mt-4">
+                <a href="{{ route('author', $post->author->id) }}" class="flex items-center lg:justify-center text-sm mt-4">
                     <img src="/images/lary-avatar.svg" alt="Lary avatar">
                     <div class="ml-3 text-left">
                         <h5 class="font-bold">{{ $post->author->name }}</h5>
@@ -30,7 +16,6 @@
                     </div>
                 </a>
             </div>
-
             <div class="col-span-8">
                 <div class="hidden lg:flex justify-between mb-6">
                     <a href="{{ route('posts') }}"
@@ -49,7 +34,7 @@
 
                     <div class="space-x-2">
                         <a 
-                            href="/category/{{ $post->category->slug }}"
+                            href="{{ route('post', $post->category->slug) }}"
                             class="px-3 py-1 border border-blue-300 rounded-full text-blue-300 text-xs uppercase font-semibold"
                         >
                             {{ $post->category->name }}
@@ -63,6 +48,43 @@
 
                 <div class="space-y-4 lg:text-lg leading-loose"> {{ $post->body }} </div>
             </div>
+            {{-- Comments section --}}
+            <section class="col-span-8 col-start-5 mt-10">
+                <h2 class="font-bold mb-6 text-4xl">Comments</h2>
+                <div class="space-y-6">
+                    <div class="bg-white border-2 border-gray-200 rounded-xl p-5">
+                        <div class="flex items-center space-x-4">
+                            <img class="border-2 border-blue-300 flex-shring-0 rounded-full rounded-xl" src="https://i.pravatar.cc/50/{{ auth()->id() }}" alt="Avatar">
+                            <div class="space-y-1.5 w-full">
+                                <div class="font-semibold text-bold tracking-wider">Want to join the discussion ?</div>
+                            </div>
+                        </div>
+                        <form class="mt-5" method="POST" action="{{ route('store_comment', $post->slug) }} ">
+                            @csrf
+                            <input type="hidden" name="post_id" value="{{ $post->id }}">
+                            <textarea cols="30" name="body" rows="5" placeholder="Add comment..." class="border-b-2 focus:border-blue-400 font-semibold outline-none py-2 text-sm w-full"></textarea>
+
+                            @if ($errors->any())
+                                <ul class="space-y-1 my-3">
+                                    @foreach ($errors->all() as $error)
+                                        <li class="font-semibold text-red-500 text-xs tracking-wide">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+
+                            <div class="border-gray-200 flex justify-end mt-4 mb-1">
+                                <button class="bg-blue-500 font-semibold hover:bg-blue-600 px-10 py-3 rounded-3xl select-none text-white tracking-wider">Publish</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    @foreach ($post->comments as $comment)
+                        <x-comment :comment="$comment"/>
+                    @endforeach
+    
+                </div>
+
+            </section>
         </article>
     </main>
 </x-layout>
