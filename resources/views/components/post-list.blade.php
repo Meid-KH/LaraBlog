@@ -7,3 +7,4 @@
     />
   @endforeach 
 </div>
+{{ $posts->links() }}

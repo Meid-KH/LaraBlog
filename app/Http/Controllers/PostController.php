@@ -10,7 +10,10 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function index() {
-        $posts = Post::latest()->filter(request(['search']))->get();
+        $posts = Post::latest()
+                ->filter(request(['search']))
+                ->paginate(15);
+                // ->get();
         
         return view('posts', [
             'posts' => $posts,
@@ -24,7 +27,7 @@ class PostController extends Controller
         ]);
     }
 
-    public function storeComment(Request $request)
+    public function storeComment(Post $post)
     {
         
         request()->validate([
@@ -33,10 +36,9 @@ class PostController extends Controller
         
         // dd(request()->all());
 
-        Comment::create([
-        // 'user_id' => auth()->id(),
-        'user_id' => 21,
-        'post_id' => request()->input('post_id'),
+        $post->comments()->create([
+        // 'user_id' => 1,
+        'user_id' => auth()->id(),
         'body' => request()->input('body'),
         ]);
 

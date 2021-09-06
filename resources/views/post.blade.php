@@ -59,25 +59,33 @@
                                 <div class="font-semibold text-bold tracking-wider">Want to join the discussion ?</div>
                             </div>
                         </div>
-                        <form class="mt-5" method="POST" action="{{ route('store_comment', $post->slug) }} ">
-                            @csrf
-                            <input type="hidden" name="post_id" value="{{ $post->id }}">
-                            <textarea cols="30" name="body" rows="5" placeholder="Add comment..." class="border-b-2 focus:border-blue-400 font-semibold outline-none py-2 text-sm w-full"></textarea>
+                        @auth
+                            <form class="mt-5" method="POST" action="{{ route('store_comment', $post->slug) }} ">
+                                @csrf
+                                <textarea cols="30" name="body" rows="5" placeholder="Add comment..." class="border-b-2 focus:border-blue-400 font-semibold outline-none py-2 text-sm w-full"></textarea>
 
-                            @if ($errors->any())
-                                <ul class="space-y-1 my-3">
-                                    @foreach ($errors->all() as $error)
-                                        <li class="font-semibold text-red-500 text-xs tracking-wide">{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            @endif
+                                @if ($errors->any())
+                                    <ul class="space-y-1 my-3">
+                                        @foreach ($errors->all() as $error)
+                                            <li class="font-semibold text-red-500 text-xs tracking-wide">{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
 
-                            <div class="border-gray-200 flex justify-end mt-4 mb-1">
-                                <button class="bg-blue-500 font-semibold hover:bg-blue-600 px-10 py-3 rounded-3xl select-none text-white tracking-wider">Publish</button>
-                            </div>
-                        </form>
+                                <div class="border-gray-200 flex justify-end mt-4 mb-1">
+                                    <button class="bg-blue-500 font-semibold hover:bg-blue-600 px-10 py-3 rounded-3xl select-none text-white tracking-wider">Publish</button>
+                                </div>
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}" class="font-bold hover:underline">
+                                login
+                            </a>
+                            <span class="font-semibold lowercase">or</span>
+                            <a href="{{ route('register') }}" class="font-bold hover:underline">
+                                Register
+                            </a>
+                        @endauth
                     </div>
-
                     @foreach ($post->comments as $comment)
                         <x-comment :comment="$comment"/>
                     @endforeach

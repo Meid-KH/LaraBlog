@@ -38,3 +38,11 @@ Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->na
 // Author
 Route::get('/authors', [AuthorController::class, 'index'])->name('authors');
 Route::get('/author/{author}', [AuthorController::class, 'show'])->name('author');
+
+
+// Breeze
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';

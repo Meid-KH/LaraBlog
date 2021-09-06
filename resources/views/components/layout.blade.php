@@ -26,14 +26,14 @@
         </a>
       </div>
 
-      <div class="mt-8 md:mt-0">
-        <a href="/" class="text-xs font-bold uppercase">Home Page</a>
-
+      <div class="flex items-center space-x-4 mt-8 md:mt-0">
         <a
           href="#"
           class="
             bg-blue-500
-            ml-3
+            hover:bg-blue-600
+            border-2
+            border-blue-500
             rounded-full
             text-xs
             font-semibold
@@ -45,6 +45,52 @@
         >
           Subscribe for Updates
         </a>
+        
+        <div class="text-xs uppercase space-x-2">
+          @auth
+            <div class="hidden sm:flex sm:items-center">
+              <x-dropdown align="right" width="48">
+                <x-slot name="trigger">
+                  <button 
+                    class="
+                    flex font-semibold items-center 
+                    px-5 py-3 border-2 border-gray-200 
+                    rounded-full text-xs uppercase
+                  hover:bg-gray-100"
+                  >
+                    <div class="font-semibold">{{ Auth::user()->name }}</div>
+                    <div class="ml-1">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                  </button>
+                </x-slot>
+                <x-slot name="content">
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <x-dropdown-link 
+                          :href="route('logout')"
+                          onclick="event.preventDefault();
+                          this.closest('form').submit();"
+                        >
+                          {{ __('Log Out') }}
+                        </x-dropdown-link>
+                    </form>
+                </x-slot>
+              </x-dropdown>
+            </div>
+          @else
+            <a href="{{ route('login') }}" class="font-bold hover:underline">
+              login
+            </a>
+            <span class="font-semibold lowercase">or</span>
+            <a href="{{ route('register') }}" class="font-bold hover:underline">
+              Register
+            </a>
+          @endauth
+        </div>        
       </div>
     </nav>
 

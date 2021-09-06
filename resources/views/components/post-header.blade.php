@@ -41,21 +41,23 @@
               <x-icon name="caret" class="transform -rotate-90 absolute pointer-events-none" style="right: 12px"/>
             </button>
           </x-slot>
-          <ul class="text-left py-2">
-            <li>
-              <x-dropdownItem href="{{ route('posts') }}" :active="request()->routeIs('posts')">
-                All
-              </x-dropdownItem>
-            </li>
-            {{-- @dump($categories) --}}
-            @foreach ($categories as $category)
+          <x-slot name="content">
+            <ul class="text-left py-2">
               <li>
-                <x-dropdownItem href="/category/{{ $category->slug }}" :active="request()->is('/category/{{ $category->slug}}')">
-                 {{ $category->name }}
+                <x-dropdownItem href="{{ route('posts') }}" :active="request()->routeIs('posts')">
+                  All
                 </x-dropdownItem>
               </li>
-            @endforeach
-          </ul>
+              {{-- @dump($categories) --}}
+              @foreach ($categories as $category)
+                <li>
+                  <x-dropdownItem href="/category/{{ $category->slug }}" :active="request()->is('/category/{{ $category->slug}}')">
+                  {{ $category->name }}
+                  </x-dropdownItem>
+                </li>
+              @endforeach
+            </ul>
+        </x-slot>
         </x-dropdown>
       </div>
     @endif
