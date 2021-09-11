@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <title>Laravel From Scratch Blog</title>
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
 <link
   href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
   rel="stylesheet"
@@ -26,26 +31,7 @@
         </a>
       </div>
 
-      <div class="flex items-center space-x-4 mt-8 md:mt-0">
-        <a
-          href="#"
-          class="
-            bg-blue-500
-            hover:bg-blue-600
-            border-2
-            border-blue-500
-            rounded-full
-            text-xs
-            font-semibold
-            text-white
-            uppercase
-            py-3
-            px-5
-          "
-        >
-          Subscribe for Updates
-        </a>
-        
+      <div class="flex items-center space-x-4 mt-8 md:mt-0">  
         <div class="text-xs uppercase space-x-2">
           @auth
             <div class="hidden sm:flex sm:items-center">
@@ -90,7 +76,26 @@
               Register
             </a>
           @endauth
-        </div>        
+        </div>  
+        <a
+          href="#newsletter"
+          class="
+            bg-blue-500
+            hover:bg-blue-600
+            border-2
+            border-blue-500
+            rounded-full
+            text-xs
+            font-semibold
+            text-white
+            uppercase
+            py-3
+            px-5
+          "
+        >
+          Subscribe for Updates
+        </a>
+            
       </div>
     </nav>
 
@@ -116,52 +121,59 @@
       <h5 class="text-3xl">Stay in touch with the latest posts</h5>
       <p class="text-sm mt-3">Promise to keep the inbox clean. No bugs.</p>
 
-      <div class="mt-10">
+      <div class="mt-10 inline-flex flex-col">
         <div class="relative inline-block mx-auto lg:bg-gray-200 rounded-full">
-          <form method="POST" action="#" class="lg:flex text-sm">
-            <div class="lg:py-3 lg:px-5 flex items-center">
-              <label for="email" class="hidden lg:inline-block">
-                <img src="/images/mailbox-icon.svg" alt="mailbox letter" />
-              </label>
-
-              <input
-                id="email"
-                type="text"
-                placeholder="Your email address"
+          <form id="newsletter" method="POST" action="{{ route('newsletter') }}" class="text-sm">
+            @csrf
+            <div class="lg:flex">
+              <div class="lg:py-3 lg:px-5 flex items-center">
+                <label for="email" class="hidden lg:inline-block">
+                  <img src="/images/mailbox-icon.svg" alt="mailbox letter" />
+                </label>
+  
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="Your email address"
+                  class="
+                    lg:bg-transparent
+                    py-2
+                    lg:py-0
+                    pl-4
+                    focus-within:outline-none
+                  "
+                />
+              </div>
+  
+              <button
+                type="submit"
                 class="
-                  lg:bg-transparent
-                  py-2
-                  lg:py-0
-                  pl-4
-                  focus-within:outline-none
+                  transition-colors
+                  duration-300
+                  bg-blue-500
+                  hover:bg-blue-600
+                  mt-4
+                  lg:mt-0 lg:ml-3
+                  rounded-full
+                  text-xs
+                  font-semibold
+                  text-white
+                  uppercase
+                  py-3
+                  px-8
                 "
-              />
+              >
+                Subscribe
+              </button>
             </div>
-
-            <button
-              type="submit"
-              class="
-                transition-colors
-                duration-300
-                bg-blue-500
-                hover:bg-blue-600
-                mt-4
-                lg:mt-0 lg:ml-3
-                rounded-full
-                text-xs
-                font-semibold
-                text-white
-                uppercase
-                py-3
-                px-8
-              "
-            >
-              Subscribe
-            </button>
           </form>
         </div>
+        @if ($errors->any())
+          <x-error-list :errors="$errors"/>
+        @endif
       </div>
     </footer>
   </section>
+  <x-flash-message/>
 </body>
 </html>

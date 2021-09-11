@@ -19,7 +19,7 @@
     <!--  Category -->
     @if ($categories->count() > 0)
       <div class="relative flex lg:inline-flex items-center">
-        <x-dropdown>
+        <x-dropdown align="left">
           <x-slot name="trigger">
             <button 
               class="flex-1 
@@ -42,7 +42,7 @@
             </button>
           </x-slot>
           <x-slot name="content">
-            <ul class="text-left py-2">
+            <ul class="text-left py-2 max-h-60 overflow-y-auto">
               <li>
                 <x-dropdownItem href="{{ route('posts') }}" :active="request()->routeIs('posts')">
                   All

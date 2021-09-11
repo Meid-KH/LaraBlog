@@ -42,7 +42,9 @@ class PostController extends Controller
         'body' => request()->input('body'),
         ]);
 
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success','Your comment added successfully!');
     }
 
 }

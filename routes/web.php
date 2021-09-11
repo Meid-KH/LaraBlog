@@ -1,28 +1,13 @@
 <?php
 
+use App\Http\Controllers\admin\AdminCategoryController;
+use App\Http\Controllers\admin\AdminDashboardController;
+use App\Http\Controllers\admin\AdminPostController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostController;
-use App\Models\Category;
-use App\Models\Post;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 // POST
 Route::get('/', [PostController::class, 'index'])->name('posts');
@@ -39,6 +24,8 @@ Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->na
 Route::get('/authors', [AuthorController::class, 'index'])->name('authors');
 Route::get('/author/{author}', [AuthorController::class, 'show'])->name('author');
 
+// Newsletter
+Route::post('/newsletter', NewsletterController::class)->name('newsletter');
 
 // Breeze
 Route::get('/dashboard', function () {
@@ -46,3 +33,20 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+// Admin
+Route::name("admin.")->prefix('admin')->group(function () {
+    Route::get('/', AdminDashboardController::class)
+      ->name('dashboard');
+
+    Route::get('/posts', [AdminPostController::class, 'index'])
+    ->name('posts');
+    
+    Route::get('/categories', [AdminCategoryController::class, 'index'])
+      ->name('categories');
+
+    Route::get('/users', function() {
+      return ("Users");
+    })
+      ->name('users');
+});

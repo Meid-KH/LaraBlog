@@ -56,7 +56,7 @@
                         <div class="flex items-center space-x-4">
                             <img class="border-2 border-blue-300 flex-shring-0 rounded-full rounded-xl" src="https://i.pravatar.cc/50/{{ auth()->id() }}" alt="Avatar">
                             <div class="space-y-1.5 w-full">
-                                <div class="font-semibold text-bold tracking-wider">Want to join the discussion ?</div>
+                                <div class="font-semibold text-bold tracking-wide">Want to join the discussion ?</div>
                             </div>
                         </div>
                         @auth
@@ -65,11 +65,7 @@
                                 <textarea cols="30" name="body" rows="5" placeholder="Add comment..." class="border-b-2 focus:border-blue-400 font-semibold outline-none py-2 text-sm w-full"></textarea>
 
                                 @if ($errors->any())
-                                    <ul class="space-y-1 my-3">
-                                        @foreach ($errors->all() as $error)
-                                            <li class="font-semibold text-red-500 text-xs tracking-wide">{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
+                                    <x-error-list :errors="$errors"/>
                                 @endif
 
                                 <div class="border-gray-200 flex justify-end mt-4 mb-1">
@@ -77,13 +73,25 @@
                                 </div>
                             </form>
                         @else
-                            <a href="{{ route('login') }}" class="font-bold hover:underline">
-                                login
-                            </a>
-                            <span class="font-semibold lowercase">or</span>
-                            <a href="{{ route('register') }}" class="font-bold hover:underline">
-                                Register
-                            </a>
+                            <div class="flex justify-center items-center space-x-4 my-8">
+                                <a 
+                                    href="{{ route('login') }}" 
+                                    class="bg-blue-500 border-2 border-blue-500 font-semibold 
+                                    hover:bg-blue-600 px-16 py-3 rounded-full 
+                                    text-white text-xs uppercase"
+                                >
+                                    login
+                                </a>
+                                <span class="font-semibold lowercase">or</span>
+                                <a 
+                                    href="{{ route('register') }}" 
+                                    class="bg-blue-500 border-2 border-blue-500 font-semibold 
+                                    hover:bg-blue-600 px-16 py-3 rounded-full 
+                                    text-white text-xs uppercase"
+                                >
+                                    Register
+                                </a>
+                            </div>
                         @endauth
                     </div>
                     @foreach ($post->comments as $comment)
