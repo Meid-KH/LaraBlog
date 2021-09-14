@@ -60,9 +60,18 @@
                           :href="route('logout')"
                           onclick="event.preventDefault();
                           this.closest('form').submit();"
+                          class="font-semibold text-xs capitalize"
                         >
                           {{ __('Log Out') }}
                         </x-dropdown-link>
+                        @admin
+                        <x-dropdown-link 
+                          :href="route('admin.dashboard')"
+                          class="font-semibold text-xs capitalize"
+                        >
+                          Dashboard
+                        </x-dropdown-link>
+                        @endadmin
                     </form>
                 </x-slot>
               </x-dropdown>

@@ -28,19 +28,25 @@ Route::get('/author/{author}', [AuthorController::class, 'show'])->name('author'
 Route::post('/newsletter', NewsletterController::class)->name('newsletter');
 
 // Breeze
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
 // Admin
-Route::name("admin.")->prefix('admin')->group(function () {
+Route::middleware('can:admin')->name("admin.")->prefix('admin')->group(function () {
     Route::get('/', AdminDashboardController::class)
       ->name('dashboard');
 
     Route::get('/posts', [AdminPostController::class, 'index'])
     ->name('posts');
+
+    Route::get('/posts/{post:slug}', [AdminPostController::class, 'show'])
+    ->name('post');
+
+    Route::patch('/posts/{post}', [AdminPostController::class, 'store'])
+    ->name('post.update');
     
     Route::get('/categories', [AdminCategoryController::class, 'index'])
       ->name('categories');
@@ -49,4 +55,14 @@ Route::name("admin.")->prefix('admin')->group(function () {
       return ("Users");
     })
       ->name('users');
+
+    Route::get('/subscriptions', function() {
+      return ("Subscription go here !");
+    })
+      ->name('subscriptions');
+
+    Route::get('/profile', function() {
+      return ("profile go here !");
+    })
+      ->name('profile');
 });
