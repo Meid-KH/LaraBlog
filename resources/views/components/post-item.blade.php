@@ -1,10 +1,12 @@
 <article
-  {{ $attributes->merge(['class' => "transition-colors
+  {{ $attributes->merge([
+    'class' => "transition-colors
     duration-300
     hover:bg-gray-100
     border border-black border-opacity-0
     hover:border-opacity-5
-    rounded-xl"]) }}
+    rounded-xl",
+]) }}
   {{-- class="
     transition-colors
     duration-300
@@ -12,22 +14,16 @@
     border border-black border-opacity-0
     hover:border-opacity-5
     rounded-xl
-  " --}}
->
+  " --}}>
   <div class="py-6 px-5">
     <a href="{{ route('post', $post->slug) }}">
-      <img
-        src="/images/illustration-3.png"
-        alt="Blog Post illustration"
-        class="rounded-xl"
-      />
+      <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Blog Post illustration" class="rounded-xl" />
     </a>
 
     <div class="mt-8 flex flex-col justify-between">
       <header>
         <div class="space-x-2">
-          <a
-            href="{{ route('category', $post->category->slug) }}"
+          <a href="{{ route('category', $post->category->slug) }}"
             class="
               px-3
               py-1
@@ -38,7 +34,7 @@
               font-semibold
             ">
             {{ ucwords($post->category->name) }}
-            </a>
+          </a>
         </div>
 
         <div class="mt-4">
@@ -55,7 +51,7 @@
       <div class="text-sm mt-4">
         {{ $post->excerpt }}
       </div>
-      
+
       <footer class="flex justify-between items-center mt-8 space-x-3">
         <a href="{{ route('author', $post->author->id) }}" class="flex flex-1 items-center text-sm">
           <img src="/images/lary-avatar.svg" alt="Lary avatar" />
@@ -66,8 +62,7 @@
         </a>
 
         <div>
-          <a
-            href="{{ route('post', $post->slug) }}"
+          <a href="{{ route('post', $post->slug) }}"
             class="
               transition-colors
               duration-300
@@ -78,9 +73,8 @@
               rounded-full
               py-2
               px-8
-            "
-            >Read More</a
-          >
+            ">Read
+            More</a>
         </div>
       </footer>
     </div>

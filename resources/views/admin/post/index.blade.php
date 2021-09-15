@@ -1,5 +1,12 @@
 <x-layout.admin>
-  <x-admin.dashboard-heading title="Posts" text="Lorem ipsum dolor, dolorum! Quam alolor." />
+  @slot('heading') Posts @endslot
+  @slot('headingText') Lorem ipsum dolor, dolorum! Quam alolor @endslot
+  @slot('actions')
+    <x-admin.action url="{{ route('admin.post.create') }}">
+      New Post
+    </x-admin.action>
+  @endslot
+  {{-- <x-admin.dashboard-heading title="Posts" text="Lorem ipsum dolor, dolorum! Quam alolor." /> --}}
   @if ($posts->count())
     <div class="flex flex-col">
       <div class="-my-2 sm:-mx-6 lg:-mx-8">
@@ -18,6 +25,10 @@
                     Excerpt
                   </th>
                   <th scope="col" class="font-medium px-6 py-3 text-gray-300 text-left text-xs tracking-wider uppercase">
+                    Category
+                  </th>
+                  <th scope="col"
+                    class="font-medium px-6 py-3 text-gray-300 text-left text-xs tracking-wider uppercase">
                     Status
                   </th>
                   <th scope="col" class="relative px-6 py-3">
@@ -28,7 +39,7 @@
               <tbody class="bg-gray-900 divide-gray-700 divide-y">
                 @foreach ($posts as $post)
                   <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-6 py-4 whitespace-nowrap--" width="100px">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 h-10 w-10">
                           <img class="h-10 w-10 rounded-full"
@@ -46,11 +57,19 @@
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                      {{ $post->title }}
+                    <td class="px-6 py-4 whitespace-nowrap-- text-sm text-gray-300" width="100px">
+                      {{ ucwords($post->title) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap-- text-sm text-gray-300">
-                      {{ $post->excerpt }}
+                      <div class="line-clamp-3" title="{{ $post->excerpt }}">{{ $post->excerpt }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <a href="{{ route('admin.category', $post->category->slug) }}"
+                        class="bg-blue-100 block font-medium 
+                        rounded-full text-blue-800 text-center text-xs
+                        hover:bg-blue-200 leading-5 px-3 py-2">
+                        {{ ucwords($post->category->name) }}
+                      </a>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <span

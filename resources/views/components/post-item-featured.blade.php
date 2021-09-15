@@ -8,23 +8,18 @@
     border border-black border-opacity-0
     hover:border-opacity-5
     rounded-xl
-  "
->
+  ">
   <div class="py-6 px-5 lg:flex">
     <a href="{{ route('post', $post->slug) }}" class="flex-1 lg:mr-8">
-      <img
-        src="/images/illustration-1.png"
-        alt="Blog Post illustration"
-        class="rounded-xl"
-      />
-    </a >
+      <img {{-- src="/images/illustration-1.png" --}} src="{{ asset('storage/' . $post->thumbnail) }}" alt="Blog Post illustration"
+        class="rounded-xl" />
+    </a>
 
     <div class="flex-1 flex flex-col justify-between">
       <header class="mt-8 lg:mt-0">
         <div class="space-x-2">
           {{-- Todo: check if it has category --}}
-          <a
-            href="{{ route('category', $post->category->slug) }}"
+          <a href="{{ route('category', $post->category->slug) }}"
             class="
               px-3
               py-1
@@ -62,8 +57,7 @@
         </a>
 
         <div class="hidden lg:block">
-          <a
-            href="{{ route('post', $post->slug) }}"
+          <a href="{{ route('post', $post->slug) }}"
             class="
               transition-colors
               duration-300
@@ -74,9 +68,8 @@
               rounded-full
               py-2
               px-8
-            "
-            >Read More</a
-          >
+            ">Read
+            More</a>
         </div>
       </footer>
     </div>

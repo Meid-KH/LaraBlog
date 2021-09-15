@@ -36,33 +36,54 @@ require __DIR__.'/auth.php';
 
 // Admin
 Route::middleware('can:admin')->name("admin.")->prefix('admin')->group(function () {
-    Route::get('/', AdminDashboardController::class)
-      ->name('dashboard');
 
+  // Home / Overview
+  Route::get('/', AdminDashboardController::class)
+  ->name('dashboard');
+  
+  // Posts
     Route::get('/posts', [AdminPostController::class, 'index'])
-    ->name('posts');
+      ->name('posts');
 
-    Route::get('/posts/{post:slug}', [AdminPostController::class, 'show'])
-    ->name('post');
+    Route::get('/post/{post:slug}/edit', [AdminPostController::class, 'edit'])
+      ->name('post');
 
-    Route::patch('/posts/{post}', [AdminPostController::class, 'store'])
-    ->name('post.update');
+    Route::patch('/post/{post}', [AdminPostController::class, 'update'])
+      ->name('post.update');
+
+    Route::get('/new-post', [AdminPostController::class, 'create'])
+      ->name('post.create');
+
+    Route::post('/post/new', [AdminPostController::class, 'store'])
+      ->name('post.store');
     
+  // Categories
     Route::get('/categories', [AdminCategoryController::class, 'index'])
       ->name('categories');
 
+    Route::get('/categories{category:slug}', [AdminCategoryController::class, 'show'])
+      ->name('category');
+      
+  // Newsletter
+      Route::get('/subscriptions', function() {
+        return ("Subscription go here !");
+      })
+      ->name('subscriptions');
+      
+  // Users
     Route::get('/users', function() {
       return ("Users");
     })
       ->name('users');
-
-    Route::get('/subscriptions', function() {
-      return ("Subscription go here !");
-    })
-      ->name('subscriptions');
-
     Route::get('/profile', function() {
       return ("profile go here !");
     })
       ->name('profile');
 });
+
+// Route::get('/testch', function() {
+//   return ("TESTT");
+// });
+
+// Route::get('/posts/new', [AdminPostController::class, 'test'])
+//   ->name('post.create');

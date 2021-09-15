@@ -23,6 +23,26 @@
       {{-- Header --}}
       <x-admin.header />
       <div class="py-8 px-10">
+        <div class="mb-12 flex justify-between items-start gap-3">
+          <div>
+            {{-- {{ $heading = null }}
+            {{ $headingText = null }}
+            {{ $actions = null }} --}}
+            @if (isset($heading))
+              <h1 class="font-bold text-5xl tracking-normal">{{ $heading }}</h1>
+            @else
+              <h1 class="font-bold text-5xl tracking-normal"> Dashboard </h1>
+            @endif
+            @if (isset($headingText))
+              <p class="leading-5 mt-3.5 text-gray-200 text-sm">{{ $headingText }}</p>
+            @endif
+          </div>
+          @if (isset($actions))
+            {{ $actions }}
+          @endif
+
+        </div>
+
         {{ $slot }}
       </div>
     </main>

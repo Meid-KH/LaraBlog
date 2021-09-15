@@ -1,5 +1,5 @@
 <x-layout.admin>
-  <x-admin.dashboard-heading title="Categories"
-    text="Lorem ipsum dolor, dolorum! Quam alolor. Perspiciatis molestiae illo iure distinctio numquam facere! Magni" />
+  @slot('heading') Overview @endslot
+
+
 </x-layout.admin>
-lorem
