@@ -3,6 +3,8 @@
 use App\Http\Controllers\admin\AdminCategoryController;
 use App\Http\Controllers\admin\AdminDashboardController;
 use App\Http\Controllers\admin\AdminPostController;
+use App\Http\Controllers\admin\AdminProfileController;
+use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsletterController;
@@ -16,7 +18,7 @@ Route::post('/post/{post:slug}/comment', [PostController::class, 'storeComment']
 
 
 // Category
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+// Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
 Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->name('category');
 
 
@@ -45,7 +47,7 @@ Route::middleware('can:admin')->name("admin.")->prefix('admin')->group(function 
     Route::get('/posts', [AdminPostController::class, 'index'])
       ->name('posts');
 
-    Route::get('/post/{post:slug}/edit', [AdminPostController::class, 'edit'])
+    Route::get('/post/{post:slug}', [AdminPostController::class, 'edit'])
       ->name('post');
 
     Route::patch('/post/{post}', [AdminPostController::class, 'update'])
@@ -54,15 +56,30 @@ Route::middleware('can:admin')->name("admin.")->prefix('admin')->group(function 
     Route::get('/new-post', [AdminPostController::class, 'create'])
       ->name('post.create');
 
-    Route::post('/post/new', [AdminPostController::class, 'store'])
+    Route::post('/new-post', [AdminPostController::class, 'store'])
       ->name('post.store');
+
+    Route::delete('post/{post}/delete', [AdminPostController::class, 'destroy'])
+      ->name('post.delete');
     
   // Categories
     Route::get('/categories', [AdminCategoryController::class, 'index'])
-      ->name('categories');
+      ->name('category.index');
 
-    Route::get('/categories{category:slug}', [AdminCategoryController::class, 'show'])
-      ->name('category');
+    Route::get('/categories/{category:slug}', [AdminCategoryController::class, 'edit'])
+      ->name('category.edit');
+
+    Route::patch('/categories/{category}/update', [AdminCategoryController::class, 'update'])
+      ->name('category.update');
+
+    Route::delete('/categories/{category}/delete', [AdminCategoryController::class, 'destroy'])
+      ->name('category.delete');
+
+    Route::get('/new-category', [AdminCategoryController::class, 'create'])
+      ->name('category.create');
+
+    Route::post('/new-category', [AdminCategoryController::class, 'store'])
+      ->name('category.store');
       
   // Newsletter
       Route::get('/subscriptions', function() {
@@ -71,19 +88,16 @@ Route::middleware('can:admin')->name("admin.")->prefix('admin')->group(function 
       ->name('subscriptions');
       
   // Users
-    Route::get('/users', function() {
-      return ("Users");
-    })
-      ->name('users');
-    Route::get('/profile', function() {
-      return ("profile go here !");
-    })
+    Route::get('/users', [AdminUserController::class, 'index'])
+      ->name('user.index');
+
+    Route::get('/users/{user:id}', [AdminUserController::class, 'show'])
+      ->name('user.show');
+
+    Route::delete('/users/{user:id}/delete', [AdminUserController::class, 'destroy'])
+      ->name('user.delete');
+
+    // current admin
+    Route::get('/profile', [AdminProfileController::class, 'show'])
       ->name('profile');
 });
-
-// Route::get('/testch', function() {
-//   return ("TESTT");
-// });
-
-// Route::get('/posts/new', [AdminPostController::class, 'test'])
-//   ->name('post.create');

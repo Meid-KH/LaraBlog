@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap"
   rel="stylesheet">
 <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
-<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+{{-- <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script> --}}
 
 <body class="overflow-x-hidden" style="font-family: inter, nunito, sans-serif;">
   <div class="bg-gray-800 grid grid-cols-12 min-h-screen text-gray-100">
@@ -48,6 +48,7 @@
     </main>
   </div>
   <x-flash-message />
+  <script src="{{ mix('/js/app.js') }}"></script>
 </body>
 
 </html>

@@ -25,6 +25,10 @@
                     Excerpt
                   </th>
                   <th scope="col" class="font-medium px-6 py-3 text-gray-300 text-left text-xs tracking-wider uppercase">
+                    Comments
+                  </th>
+                  <th scope="col"
+                    class="font-medium px-6 py-3 text-gray-300 text-left text-xs tracking-wider uppercase">
                     Category
                   </th>
                   <th scope="col"
@@ -39,7 +43,7 @@
               <tbody class="bg-gray-900 divide-gray-700 divide-y">
                 @foreach ($posts as $post)
                   <tr>
-                    <td class="px-6 py-4 whitespace-nowrap--" width="100px">
+                    <td class="px-6 py-4 whitespace-nowrap-- w-40">
                       <div class="flex items-center">
                         <div class="flex-shrink-0 h-10 w-10">
                           <img class="h-10 w-10 rounded-full"
@@ -47,9 +51,10 @@
                             alt="">
                         </div>
                         <div class="ml-4">
-                          <div class="text-sm font-medium text-gray-300">
+                          <a href="{{ route('admin.user.show', $post->author->id) }}"
+                            class="text-sm font-medium text-gray-300 hover:underline">
                             {{ $post->author->name }}
-                          </div>
+                          </a>
                           <a href="mailto:{{ $post->author->email }}"
                             class="block text-sm text-gray-400 hover:text-gray-200 hover:underline">
                             {{ $post->author->email }}
@@ -63,8 +68,11 @@
                     <td class="px-6 py-4 whitespace-nowrap-- text-sm text-gray-300">
                       <div class="line-clamp-3" title="{{ $post->excerpt }}">{{ $post->excerpt }}</div>
                     </td>
+                    <td class="px-6 py-4 whitespace-nowrap-- text-sm text-gray-300">
+                      {{ $post->comments->count() }}
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <a href="{{ route('admin.category', $post->category->slug) }}"
+                      <a href="{{ route('admin.category.edit', $post->category->slug) }}"
                         class="bg-blue-100 block font-medium 
                         rounded-full text-blue-800 text-center text-xs
                         hover:bg-blue-200 leading-5 px-3 py-2">
@@ -78,8 +86,22 @@
                       </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <a href="{{ route('admin.post', $post->slug) }}"
-                        class="text-blue-500 hover:text-blue-400">Edit</a>
+                      <div class="flex items-center gap-3">
+                        <a href="{{ route('admin.post', $post->slug) }}"
+                          class="text-blue-500 hover:text-blue-400 hover:underline">Edit</a>
+                        <form onclick="
+                          event.preventDefault();
+                          if(confirm('Sure, you want to delete this record ?'))
+                          this.submit();
+                            // console.log('You deleted it')
+                          " method="POST" action="{{ route('admin.post.delete', $post->id) }}">
+                          @csrf
+                          @method("DELETE")
+                          <button class="text-red-500 hover:text-red-400 hover:underline">
+                            Delete
+                          </button>
+                        </form>
+                      </div>
                     </td>
                   </tr>
                 @endforeach

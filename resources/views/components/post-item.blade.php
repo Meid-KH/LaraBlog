@@ -17,13 +17,17 @@
   " --}}>
   <div class="py-6 px-5">
     <a href="{{ route('post', $post->slug) }}">
-      <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Blog Post illustration" class="rounded-xl" />
+      @if ($post->thumbnail)
+        <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Blog Post illustration" class="rounded-xl" />
+      @else
+        <img src="/images/illustration-1.png" alt="Blog Post illustration" class="rounded-xl" />
+      @endif
     </a>
 
     <div class="mt-8 flex flex-col justify-between">
       <header>
         <div class="space-x-2">
-          <a href="{{ route('category', $post->category->slug) }}"
+          <a href="{{ $post->category ? route('category', $post->category->slug) : "javascript:void(0)" }}"
             class="
               px-3
               py-1
@@ -33,7 +37,7 @@
               uppercase
               font-semibold
             ">
-            {{ ucwords($post->category->name) }}
+            {{ $post->category ? ucwords($post->category->name) : __("Uncategorized") }}
           </a>
         </div>
 
