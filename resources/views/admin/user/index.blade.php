@@ -38,8 +38,18 @@
                       {{ $user->id }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap--">
-                      <a class="hover:underline" href="{{ route('admin.user.show', $user->id) }}">
-                        {{ $user->name }}
+                      <a href="{{ route('admin.user.show', $user->id) }}" class="flex items-center">
+                        <div class="flex-shrink-0 w-16 h-16">
+                          <img class="rounded-full" src="{{ asset('storage/' . $user->avatar) }}" alt="">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-300 hover:underline">
+                            {{ $user->name }}
+                          </div>
+                          {{-- <a href="mailto:zkovacek@example.com" class="block text-sm text-gray-400 hover:text-gray-200 hover:underline">
+                            zkovacek@example.com
+                          </a> --}}
+                        </div>
                       </a>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-xs">

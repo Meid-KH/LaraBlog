@@ -12,7 +12,7 @@
           flex gap-3 items-center hover:bg-gray-700">
           {{ auth()->user()->name }}
           <img class="-mr-4 -my-2 border-2 border-white flex-shring-0 rounded-full"
-            src="https://i.pravatar.cc/35/{{ auth()->user()->id }}" alt="Avatar">
+            src="{{ asset('storage/' . auth()->user()->avatar) }}" width="40" alt="Avatar">
         </button>
       </x-slot>
       <x-slot name="content">
