@@ -20,7 +20,7 @@ class NewsletterController extends Controller
         }
         return redirect()
             ->back()
-            ->with('success','Congrats🎉, Your has been added toour Newsletter!');
+            ->with('success','Congrats🎉, Your email has been added to our Newsletter!');
 
     }
    

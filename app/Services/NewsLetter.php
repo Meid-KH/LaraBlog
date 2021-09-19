@@ -11,6 +11,12 @@ class NewsLetter
         "status" => "subscribed",
     ]); 
   }
+
+  public function getList($list) {
+    $list ??= config("services.mailchimp.newsletterList");
+    return $this->client()->lists->getListMembersInfo($list); 
+  }
+
   protected function client() {
     $mailchimp = new \MailchimpMarketing\ApiClient();
     $mailchimp->setConfig([

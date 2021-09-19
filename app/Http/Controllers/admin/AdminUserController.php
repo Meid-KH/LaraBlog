@@ -27,4 +27,14 @@ class AdminUserController extends Controller
       redirect(route('admin.user.index'))
       ->with("success", "User successfully deleted ❌");
   }
+
+  public function makeAdmin(User $user) {
+    // dd($user->name);
+    $user->update([
+      "role" => "admin",
+    ]);
+    return 
+      redirect(route('admin.user.index'))
+      ->with("success", "User made as Admin 👍");
+  }
 }

@@ -11,8 +11,9 @@
           class="font-medium bg-gray-800 px-4 py-2 rounded-3xl text-sm 
           flex gap-3 items-center hover:bg-gray-700">
           {{ auth()->user()->name }}
-          <img class="-mr-4 -my-2 border-2 border-white flex-shring-0 rounded-full"
-            src="{{ asset('storage/' . auth()->user()->avatar) }}" width="40" alt="Avatar">
+          <span class="inline-block -mr-4 -my-2 rounded-full border-2 border-white w-10 h-10">
+            <x-admin.avatar src="{{ auth()->user()->avatar }}" name="{{ auth()->user()->name }}" />
+          </span>
         </button>
       </x-slot>
       <x-slot name="content">

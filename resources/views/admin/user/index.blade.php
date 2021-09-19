@@ -24,7 +24,7 @@
                   </th>
                   <th scope="col"
                     class="font-medium px-6 py-3 text-gray-300 text-left text-xs tracking-wider uppercase">
-                    Badge
+                    Role
                   </th>
                   <th scope="col" class="relative px-6 py-3">
                     <span class="sr-only">Remove</span>
@@ -39,16 +39,13 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap--">
                       <a href="{{ route('admin.user.show', $user->id) }}" class="flex items-center">
-                        <div class="flex-shrink-0 w-16 h-16">
-                          <img class="rounded-full" src="{{ asset('storage/' . $user->avatar) }}" alt="">
+                        <div class="w-10 h-10">
+                          <x-admin.avatar src="{{ $user->avatar }}" name="{{ $user->name }}" />
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium text-gray-300 hover:underline">
                             {{ $user->name }}
                           </div>
-                          {{-- <a href="mailto:zkovacek@example.com" class="block text-sm text-gray-400 hover:text-gray-200 hover:underline">
-                            zkovacek@example.com
-                          </a> --}}
                         </div>
                       </a>
                     </td>
@@ -61,10 +58,54 @@
                       {{ $user->posts->count() }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <span
-                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                        Admin
-                      </span>
+                      {{-- @if ($user->role == 'admin')
+                        <span
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                          {{ $user->role }}
+                        </span>
+                      @elseif($user->role =='super-admin' )
+                        <button
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800">
+                          Make as admin
+                        </button>
+                      @else
+                        -----
+                      @endif --}}
+                      @if ($user->role)
+                        <span
+                          class="px-3 py-1 block text-center text-xs leading-5 
+                          font-semibold rounded-full 
+                          @if ($user->role == 'super admin') 
+                          text-red-700 bg-red-200
+                          @else
+                          bg-green-100 text-green-800
+                          @endif
+                          ">
+                          {{ ucwords($user->role) }}
+                        </span>
+                      @else
+                        @if (Auth::user()->can('super-admin'))
+
+                          <form action="{{ route('admin.user.makeAdmin', $user->id) }}" method="POST" onclick="
+                            event.preventDefault();
+                            if(confirm('Sure, you want to make this user as Admin ?'))
+                            this.submit();
+                              // console.log('You deleted it')
+                            ">
+                            @csrf
+                            @method('PUT')
+                            <button
+                              class="bg-blue-500 block font-light leading-5 px-3 py-1 
+                              rounded-full text-center text-white tracking-wide w-full hover:bg-blue-600">
+                              {{ ucwords('Make as admin') }}
+                            </button>
+                          </form>
+
+                        @else
+                          <span class="block text-center">__</span>
+                        @endif
+                      @endif
+
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div class="flex items-center gap-3">

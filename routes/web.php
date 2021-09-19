@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AdminCategoryController;
 use App\Http\Controllers\admin\AdminDashboardController;
 use App\Http\Controllers\admin\AdminPostController;
 use App\Http\Controllers\admin\AdminProfileController;
+use App\Http\Controllers\admin\AdminSubscriptionController;
 use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
@@ -81,11 +82,7 @@ Route::middleware('can:admin')->name("admin.")->prefix('admin')->group(function 
     Route::post('/new-category', [AdminCategoryController::class, 'store'])
       ->name('category.store');
       
-  // Newsletter
-      Route::get('/subscriptions', function() {
-        return ("Subscription go here !");
-      })
-      ->name('subscriptions');
+ 
       
   // Users
     Route::get('/users', [AdminUserController::class, 'index'])
@@ -97,7 +94,14 @@ Route::middleware('can:admin')->name("admin.")->prefix('admin')->group(function 
     Route::delete('/users/{user:id}/delete', [AdminUserController::class, 'destroy'])
       ->name('user.delete');
 
+    Route::put('/users/{user:id}/make-admin', [AdminUserController::class, 'makeAdmin'])
+      ->name('user.makeAdmin');
+
     // current admin
     Route::get('/profile', [AdminProfileController::class, 'show'])
       ->name('profile');
+
+  // Newsletter
+      Route::get('/subscriptions', AdminSubscriptionController::class)
+      ->name('subscriptions');
 });

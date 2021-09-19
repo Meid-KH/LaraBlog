@@ -1,7 +1,7 @@
 <aside class="bg-gray-900 border-r-2 border-gray-700 
   col-span-2 h-100 h-screen pt-4 px-8 sticky top-0 left-0">
   <a href="{{ route('admin.dashboard') }}" class="block pt-3">
-    <img src="/images/lary-avatar.svg" alt="Logo">
+    <img class="mx-auto" src="/images/lary-avatar.svg" alt="Logo">
   </a>
   <ul class="mt-40 space-y-2">
     <li>

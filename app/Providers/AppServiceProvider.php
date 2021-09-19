@@ -29,8 +29,11 @@ class AppServiceProvider extends ServiceProvider
     {
       Model::unguard();
       
+      Gate::define('super-admin', function (User $user) {
+        return $user->role === "super admin";
+      });
       Gate::define('admin', function (User $user) {
-        return $user->email === "maeid.kh@gmail.com";
+        return $user->role === "super admin" or $user->role === "admin";
       });
 
       Blade::if('admin', function () {
