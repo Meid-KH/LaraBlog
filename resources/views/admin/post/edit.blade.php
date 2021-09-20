@@ -5,6 +5,9 @@
 
   @slot('actions')
     <x-admin.action url="{{ route('admin.post.create') }}">
+      <span class="flex-shrink-0 w-5">
+        <x-icon name="edit" />
+      </span>
       New Post
     </x-admin.action>
   @endslot

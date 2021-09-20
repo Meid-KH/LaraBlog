@@ -3,6 +3,9 @@
   @slot('headingText') Lorem ipsum dolor, dolorum! Quam alolor @endslot
   @slot('actions')
     <x-admin.action url="{{ route('admin.category.create') }}">
+      <span class="flex-shrink-0 w-5">
+        <x-icon name="edit" />
+      </span>
       New Category
     </x-admin.action>
   @endslot
@@ -23,7 +26,8 @@
                   <th scope="col" class="font-medium px-6 py-3 text-gray-300 text-left text-xs tracking-wider uppercase">
                     Description
                   </th>
-                  <th scope="col" class="font-medium px-6 py-3 text-gray-300 text-left text-xs tracking-wider uppercase">
+                  <th scope="col"
+                    class="font-medium px-6 py-3 text-gray-300 text-left text-xs tracking-wider uppercase">
                     Posts Count
                   </th>
                   <th scope="col" class="relative px-6 py-3">
